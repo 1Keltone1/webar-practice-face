@@ -24,25 +24,46 @@
     vr-mode-ui="enabled: false"
     device-orientation-permission-ui="enabled: false">
 
-    <!-- 1. Добавляем assets с моделью -->
     <a-assets timeout="15000">
-      <a-asset-item id="jojo" src="models/glasses.glb"></a-asset-item>
+      <a-asset-item id="glasses" src="models/glasses.glb"></a-asset-item>
     </a-assets>
 
     <a-camera active="false" position="0 0 0"></a-camera>
 
-    <!-- 2. Заменяем a-sphere на a-gltf-model -->
     <a-entity mindar-face-target="anchorIndex: 1">
       <a-gltf-model
-        src="#jojo"
-        position="0 0.22 0"
+        src="#glasses"
         rotation="0 0 0"
-        scale="0.002 0.002 0.002">
+        adaptive-glasses>
       </a-gltf-model>
     </a-entity>
 
     <a-entity light="type: ambient; color: #BBB"></a-entity>
     <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="1 2 1"></a-entity>
   </a-scene>
+
+  <script>
+    AFRAME.registerComponent('adaptive-glasses', {
+      init: function () {
+        const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+        const desktopPos   = { x: 0, y: 0.22, z: 0 };
+        const desktopScale = { x: 0.002, y: 0.002, z: 0.002 };
+
+        const mobilePos   = { x: 0, y: 0, z: 0 };
+        const mobileScale = { x: 0.002, y: 0.002, z: 0.002 };
+
+        if (isMobile) {
+          this.el.setAttribute('position', mobilePos);
+          this.el.setAttribute('scale', mobileScale);
+          console.log('[adaptive-glasses] Mobile values applied:', mobilePos, mobileScale);
+        } else {
+          this.el.setAttribute('position', desktopPos);
+          this.el.setAttribute('scale', desktopScale);
+          console.log('[adaptive-glasses] Desktop values applied:', desktopPos, desktopScale);
+        }
+      }
+    });
+  </script>
 </body>
 </html>
