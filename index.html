@@ -17,7 +17,7 @@
 </head>
 <body>
   <a-scene
-    mindar-face
+    mindar-face="filterMinCF: 0.001; filterBeta: 0.01; missTolerance: 10"
     embedded
     color-space="sRGB"
     renderer="alpha: true; colorManagement: true, physicallyCorrectLights"
@@ -50,7 +50,7 @@
         const desktopPos   = { x: 0, y: 0.22, z: 0 };
         const desktopScale = { x: 0.002, y: 0.002, z: 0.002 };
 
-        const mobilePos   = { x: 0, y: 0, z: 0 };
+        const mobilePos   = { x: 0, y: -0.7, z: 0 };
         const mobileScale = { x: 0.002, y: 0.002, z: 0.002 };
 
         if (isMobile) {
